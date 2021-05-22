@@ -15,8 +15,16 @@ function getSeries() {
       let series = [];
       series = data; // guardo los datos en el array de series
       paintSeries(); // llamo a la función que pinta los datos en el HTML
+      handleSearch(); // función escuchadora
     });
+  console.log(getSeries);
 }
+
+// Evitar el envío por defecto del input del formulario
+function handleForm(ev) {
+  ev.preventDefault();
+}
+search.addEventListener("submit", handleForm);
 
 // Pintar los datos de la búsqueda de la usuaria en el HTML (recorro el array)
 const listSeries = document.querySelector(".js-result");
@@ -33,7 +41,7 @@ function paintSeries() {
     if (image === null) {
       htmlCode += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="no image avaliable"/>`; // imagen por defecto para aquellas series que no tienen
     } else {
-      htmlCode += `<img src="${image.medium} class= "serieImage" alt="Image ${name}`; // muestra una imagen de la serie
+      htmlCode += `<img src="${image.medium} class= "serieImage" alt="Image ${name}`; // muestra la imagen de la serie
     }
     htmlCode += `</li>`;
     return htmlCode;
