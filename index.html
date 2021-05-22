@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="icon" href="./images/popcorn.png"/>
+    <title>Evaluación final - módulo 2</title>
+</head>
+<body>
+  <header class="header">
+      <h1 class="header__title">Buscador de series</h1>
+    <form class="form" id="form">
+        <label class="label" for="search">
+            <input type="text" type="text" id="search" class="search js-search" placeholder="Introduce una serie">
+        </label>
+        <button class="button js-button">
+            <i class="icon fas fa-search"></i>
+        </button>
+    </form>
+  </header>
+  <main class="main">
+    <section class="favorite__section">
+      <h2>Mis series favoritas</h2>
+        <ul class="js-favorite"></ul>
+    </section>
+    <section class="result__section">
+      <h2>Resultado de la búsqueda</h2>
+        <ul class="js-result"></ul>
+    </section>   
+  </main> 
+    <script type="text/javascript" src="./js/main.js"></script>
+</body>
+</html>
