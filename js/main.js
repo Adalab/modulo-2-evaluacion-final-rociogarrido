@@ -9,7 +9,8 @@ const search = document.querySelector(".js-search");
 
 function getSeries() {
   const inputValue = search.value;
-  fetch(`//api.tvmaze.com/search/shows?q=${inputValue}`)
+  console.log(getSeries);
+  fetch(`https://api.tvmaze.com/search/shows?q=${inputValue}`)
     .then((response) => response.json()) // Le pido en el primer then que devuelva la respuesta en json
     .then((data) => {
       let series = [];
@@ -17,7 +18,6 @@ function getSeries() {
       paintSeries(); // llamo a la función que pinta los datos en el HTML
       handleSearch(); // función escuchadora
     });
-  console.log(getSeries);
 }
 
 // Evitar el envío por defecto del input del formulario
@@ -39,7 +39,7 @@ function paintSeries() {
     htmlCode = `<li class="js-card serieCard" id="${id}">`; // el id de la serie
     htmlCode += `<h3 class="js-name">${name}</h3>`; // muestra el nombre de la serie
     if (image === null) {
-      htmlCode += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="no image avaliable"/>`; // imagen por defecto para aquellas series que no tienen
+      htmlCode += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="no image available"/>`; // imagen por defecto para aquellas series que no tienen
     } else {
       htmlCode += `<img src="${image.medium} class= "serieImage" alt="Image ${name}`; // muestra la imagen de la serie
     }
