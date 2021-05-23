@@ -80,7 +80,7 @@ main {
   padding: 10px;
   margin-top: 100px;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
 }
 
@@ -90,14 +90,18 @@ h2 {
 
 /* Tarjetas de las series */
 .serieCard {
-  width: 170px;
+  width: 180px;
+  height: 250px;
   margin: 1rem;
   background-color: rgb(7, 141, 141);
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  border-radius: 5px;
+}
+
+h3 {
+  font-size: 16px;
 }
 
 .serieImage {
-  width: 130px;
-  height: 180px;
+  width: 150px;
 }

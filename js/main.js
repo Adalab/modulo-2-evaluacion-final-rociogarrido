@@ -2,7 +2,7 @@
 // 2. BÚSQUEDA
 // GLOBAL VAR. Arrays vacías para que se llenen con lo que añada la usuaria.
 let series = []; // array vacío para llenar con los datos de la API
-let favorite = []; // array para almacenar las series favoritas
+let favorite = []; // array para almacenar las series favoritas de la usuaria
 
 // Call to API. Obtener los datos del API y guardarlos en JSON
 const search = document.querySelector(".js-search");
@@ -20,34 +20,32 @@ const getFromApi = () => {
 
 // Guardar los datos de la búsqueda en un array.
 const listSeries = document.querySelector(".js-result");
-const defaultImage =
-  "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 
 const getSerieHtmlCode = (serie) => {
-  let htmlCode = ""; // creo una array vacía para la tarjeta
+  let htmlCard = "";
   // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
-  htmlCode += `<article class="serieCard"`;
-  htmlCode += `<id="${serie.show.id}">`;
-  htmlCode += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
+  htmlCard += `<li class="serieCard">`;
+  htmlCard += `<data-id="${serie.show.id}">`;
   if (serie.show.image === null) {
-    htmlCode += defaultImage; // imagen por defecto para aquellas series que no tienen
+    htmlCard += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="serieImage" />`; // imagen por defecto para aquellas series que no tienen
   } else {
-    htmlCode += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}`; // muestra la imagen de la serie
+    htmlCard += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}/>`; // muestra la imagen de la serie
   }
-  htmlCode += `</article>`;
-  return htmlCode;
+  htmlCard += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
+  htmlCard += `</li>`;
+  return htmlCard;
 };
 
 // Pinto en el HTML.
 const paintSeries = () => {
-  let seriesCode = "";
+  let seriesCards = "";
   for (const serie of series) {
-    seriesCode += getSerieHtmlCode(serie);
+    seriesCards += getSerieHtmlCode(serie);
   }
-  listSeries.innerHTML = seriesCode;
+  listSeries.innerHTML = seriesCards;
 };
 
-// Evento listener al botón de búsqueda
+// Escuchar al evento click en botón de búsqueda
 const btnSearch = document.querySelector(".js-button");
 
 function handleSearch() {
@@ -56,9 +54,40 @@ function handleSearch() {
 
 btnSearch.addEventListener("click", handleSearch);
 
-// 3. FAVORITOS.
+// 3. FAVORITOS. Una vez aparecen los resultados de la búsqueda, la usuaria puede indicar cuáles son sus series favoritas.
+// Función para añadir a favoritos
 const listFav = document.querySelector(".js-favorite");
 
+const addToFav = (ev) => {
+  ev.preventDefault();
+  const clickedCard = parseInt(ev.currentTarget.id);
+  const isFav = favorite.findIndex((elemId) => elemId.show.id === clickedCard);
+  if (isFav === -1) {
+    const favEl = series.find((serie) => serie.show.id === clickedCard);
+    favorite.push(favEl);
+  } else {
+    alert("Esta serie ya está en favoritos");
+  }
+};
+
+// Función para pintar el listado de las series favoritas
+function paintFav() {
+  let htmlFav = "";
+  for (const htmlFav of favorite) {
+    htmlFav += `<li class="serieFav">`;
+    htmlFav += `<data-id="${serie.show.id}">`;
+    if (serie.show.image === null) {
+      htmlFav += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="serieImage" />`;
+    } else {
+      htmlFav += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}/>`;
+    }
+    htmlFav += `<h3>${serie.show.name}</h3>`;
+    htmlFav += `</li>`;
+    listFav.innerHTML = htmlFav;
+  }
+}
+
 // Funciones al ARRANCAR LA PÁGINA
-debugger;
+
 getFromApi();
+paintSeries();
