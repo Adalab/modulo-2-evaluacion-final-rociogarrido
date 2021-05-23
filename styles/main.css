@@ -11,6 +11,7 @@
 body {
   background: url("../images/sofa.jpg") no-repeat center;
   background-size: cover;
+  min-height: 100%;
 }
 
 .header {
@@ -77,9 +78,6 @@ main {
   width: 70vw;
   padding: 10px;
   margin-top: 100px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 
 h2 {
@@ -89,7 +87,6 @@ h2 {
 /* Tarjetas de las series */
 .serieCard {
   width: 170px;
-  display: inline-block;
   margin: 1rem;
   background-color: rgb(7, 141, 141);
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
