@@ -4,39 +4,48 @@
 let series = []; // array vacío para llenar con los datos de la API
 let favorite = []; // array para almacenar las series favoritas
 
-// Call to API. Obtener los datos de la API y guardarlos en JSON
+// Call to API. Obtener los datos del API y guardarlos en JSON
 const search = document.querySelector(".js-search");
 
-function getFromApi() {
+const getFromApi = () => {
   const inputValue = search.value;
-  console.log(inputValue);
-  fetch(`https://api.tvmaze.com/search/shows?q=${inputValue}`) // para construir la URL de búsqueda hay que recoger el texto que ha introducido la usuaria en el campo de búsqueda
+
+  fetch(`//api.tvmaze.com/search/shows?q=${inputValue}`) // para construir la URL de búsqueda hay que recoger el texto que ha introducido la usuaria en el campo de búsqueda
     .then((response) => response.json()) // Le pido en el primer then que devuelva la respuesta en json
     .then((data) => {
       series = data; // guardo los datos en el array de series
       paintSeries(); // llamo a la función que pinta los datos en el HTML
     });
-}
+};
 
-// Pintar los datos de la búsqueda de la usuaria en el HTML (recorro el array)
+// Guardar los datos de la búsqueda en un array.
 const listSeries = document.querySelector(".js-result");
+const defaultImage =
+  "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 
-function paintSeries() {
+const getSerieHtmlCode = (serie) => {
   let htmlCode = ""; // creo una array vacía para la tarjeta
-  for (const serie of series) {
-    console.log(serie);
-    // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
-    htmlCode += `<li class="serieCard" id="${serie.show.id}">`; // el id de la serie
-    htmlCode += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
-    if (serie.show.image === null) {
-      htmlCode += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" class= "serieImage" alt="no image available"/>`; // imagen por defecto para aquellas series que no tienen
-    } else {
-      htmlCode += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}`; // muestra la imagen de la serie
-    }
-    htmlCode += `</li>`;
+  // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
+  htmlCode += `<article class="serieCard"`;
+  htmlCode += `<id="${serie.show.id}">`;
+  htmlCode += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
+  if (serie.show.image === null) {
+    htmlCode += defaultImage; // imagen por defecto para aquellas series que no tienen
+  } else {
+    htmlCode += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}`; // muestra la imagen de la serie
   }
-  listSeries.innerHTML = htmlCode;
-}
+  htmlCode += `</article>`;
+  return htmlCode;
+};
+
+// Pinto en el HTML.
+const paintSeries = () => {
+  let seriesCode = "";
+  for (const serie of series) {
+    seriesCode += getSerieHtmlCode(serie);
+  }
+  listSeries.innerHTML = seriesCode;
+};
 
 // Evento listener al botón de búsqueda
 const btnSearch = document.querySelector(".js-button");
@@ -51,3 +60,5 @@ btnSearch.addEventListener("click", handleSearch);
 const listFav = document.querySelector(".js-favorite");
 
 // Funciones al ARRANCAR LA PÁGINA
+debugger;
+getFromApi();
