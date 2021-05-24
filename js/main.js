@@ -66,8 +66,7 @@ const addToFav = (ev) => {
   // Busco si la serie clicada está en la lista de favoritas comparando ids
   const isFav = favorite.find(
     (favoriteId) => favoriteId.show.id === clickedCardId
-  );
-  // si la serie clicada no está en el array de favoritas
+  ); // si la serie clicada no está en el array de favoritas
   if (isFav === undefined) {
     favorite.push(foundSerie); // la añadimos
   } else {
@@ -95,14 +94,15 @@ const paintFav = () => {
     }
     htmlFav += `<h3>${favSerie.show.name}</h3>`;
     htmlFav += `</li>`;
-    listFav.innerHTML = htmlFav; // lo pinto en el HTML
   }
+  htmlFav += `<button class="js-removedCard"></button>`;
+  listFav.innerHTML = htmlFav; // lo pinto en el HTML
   addListeners();
   keepInLocalStorage();
 };
 
 // 4. ALMACENAMIENTO LOCAL
-// Almacenar el listado de favoritas en el localStorage
+// Almacenar la lista de favoritas en el localStorage
 const keepInLocalStorage = () => {
   localStorage.setItem("favorite", JSON.stringify(favorite));
 };
@@ -129,9 +129,10 @@ const removeFav = (ev) => {
   const favSerie = favorite.find(
     (favorite) => favorite.show.id === clickedCardId
   );
-  const favIndex = favorite.indexOf(favSerie);
+  const favIndex = favorite.indexOf(favSerie); // busco el elemento dentro de la lista de favoritos q
   if (favIndex > -1) {
-    favorite.splice(favIndex, 1);
+    // si su índice es mayor que -1 (es decir, cualquier serie que esté en el array)
+    favorite.splice(favIndex, 1); // le quitas al array la serie
   }
   keepInLocalStorage();
   paintFav();
