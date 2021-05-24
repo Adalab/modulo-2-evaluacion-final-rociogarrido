@@ -1,8 +1,13 @@
 "use strict";
-// 2. BÚSQUEDA
-// GLOBAL VAR. Arrays vacías para que se llenen con lo que añada la usuaria.
-let series = []; // array vacío para llenar con los datos de la API
+let series = []; // array para llenar con los datos de la API
 let favorite = []; // array para almacenar las series favoritas de la usuaria
+// 2. BÚSQUEDA
+// Función ESCUCHADORA del botón "buscar"
+const btnSearch = document.querySelector(".js-button");
+const handleSearch = () => {
+  getFromApi();
+};
+btnSearch.addEventListener("click", handleSearch);
 
 // Call to API. Obtener los datos del API y guardarlos en JSON
 const search = document.querySelector(".js-search");
@@ -20,13 +25,13 @@ const getFromApi = () => {
 const listSeries = document.querySelector(".js-result");
 const getSerieHtmlCode = (serie) => {
   let htmlCard = "";
-  // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
+  // por cada show del resultado de la búsqueda hay que pintar una tarjeta:
   htmlCard += `<li class="js-serieCard serieCard" `;
   htmlCard += `data-id="${serie.show.id}">`;
   if (serie.show.image === null) {
     htmlCard += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="serieImage" />`; // imagen por defecto para aquellas series que no tienen
   } else {
-    htmlCard += `<img src="${serie.show.image.medium}" class= "serieImage" alt="Image ${serie.show.name}"/>`; // muestra la imagen de la serie
+    htmlCard += `<img src="${serie.show.image.medium}" class="serieImage" alt="Image ${serie.show.name}"/>`; // muestra la imagen de la serie
   }
   htmlCard += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
   htmlCard += `</li>`;
@@ -42,13 +47,6 @@ const paintSeries = () => {
   listSeries.innerHTML = seriesCards;
   addListeners();
 };
-
-// Función ESCUCHADORA Del botón "buscar"
-const btnSearch = document.querySelector(".js-button");
-const handleSearch = () => {
-  getFromApi();
-};
-btnSearch.addEventListener("click", handleSearch);
 
 // 3. FAVORITOS. Una vez aparecen los resultados de la búsqueda, la usuaria puede indicar cuáles son sus series favoritas.
 // Función ESCUCHADORA, sobre la que hago click para agregar a favoritos
@@ -83,7 +81,6 @@ const addToFav = (ev) => {
 
 // Función para pintar el listado de las series favoritas
 const listFav = document.querySelector(".js-favorite");
-
 const paintFav = () => {
   let htmlFav = ""; // creo la variable vacía para pintar en el HTML
   htmlFav += `<h2>Favoritas</h2>`;
@@ -98,8 +95,7 @@ const paintFav = () => {
     }
     htmlFav += `<h3>${favSerie.show.name}</h3>`;
     htmlFav += `</li>`;
-    // lo pinto en el HTML
-    listFav.innerHTML = htmlFav;
+    listFav.innerHTML = htmlFav; // lo pinto en el HTML
   }
   addListeners();
   keepInLocalStorage();
@@ -126,7 +122,7 @@ const removeListeners = () => {
   }
 };
 
-// Función para eliminar una película de favoritas
+// Función para eliminar una película de favoritas. ¡REVISAR!
 const removeFav = (ev) => {
   const clickedCard = ev.currentTarget.dataset;
   const clickedCardId = parseInt(clickedCard.id);
