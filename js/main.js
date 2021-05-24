@@ -24,7 +24,7 @@ const listSeries = document.querySelector(".js-result");
 const getSerieHtmlCode = (serie) => {
   let htmlCard = "";
   // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
-  htmlCard += `<li class="serieCard" `;
+  htmlCard += `<li class="js-serieCard serieCard" `;
   htmlCard += `data-id="${serie.show.id}">`;
   if (serie.show.image === null) {
     htmlCard += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="serieImage" />`; // imagen por defecto para aquellas series que no tienen
@@ -43,6 +43,7 @@ const paintSeries = () => {
     seriesCards += getSerieHtmlCode(serie);
   }
   listSeries.innerHTML = seriesCards;
+  addListeners();
 };
 
 // Escuchar al evento click en botón de búsqueda
@@ -56,36 +57,76 @@ btnSearch.addEventListener("click", handleSearch);
 
 // 3. FAVORITOS. Una vez aparecen los resultados de la búsqueda, la usuaria puede indicar cuáles son sus series favoritas.
 // Función para añadir a favoritos
-/*const listFav = document.querySelector(".js-favorite");
 
 const addToFav = (ev) => {
   ev.preventDefault();
+  // para reconocer el id de la tarjeta clicada.
   const clickedCard = parseInt(ev.currentTarget.id);
-  const isFav = favorite.findIndex((elemId) => elemId.show.id === clickedCard);
-  if (isFav === -1) {
-    const favEl = series.find((serie) => serie.show.id === clickedCard);
-    favorite.push(favEl);
+  // buscar el elemento clickado por su ID y si es el mismo lo mete en la variable
+  let foundSerie = series.find((serie) => serie.id === clickedCard);
+  // buscar si la serie clickada está en la lista de favoritos comparando ids
+  let isFav = favorite.find(
+    (favoriteId) => favoriteId.show.id === itemShowInfo.show.id
+  );
+  // si la serie en la clicamos es undefined porque no está en el array de favoritas
+  if (isFav === undefined) {
+    favorite.push(foundSerie); // la añadimos
   } else {
-    alert("Esta serie ya está en favoritos");
+    favorite = favorite.filter(
+      (favoriteId) => favoriteId.show.id !== serie.show.id
+    );
   }
+  keepInLocalStorage();
+  paintFav();
 };
 
 // Función para pintar el listado de las series favoritas
-function paintFav() {
+const listFav = document.querySelector(".js-favorite");
+
+const paintFav = () => {
+  // creo la variable vacía para pintar en el HTML
   let htmlFav = "";
-  for (const htmlFav of favorite) {
-    htmlFav += `<li class="serieFav">`;
-    htmlFav += `<data-id="${serie.show.id}">`;
-    if (serie.show.image === null) {
-      htmlFav += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="serieImage" />`;
+  // bucle para recorrer el array
+  for (const favSerie of favorite) {
+    htmlFav += `<li class="favCard">`;
+    htmlFav += `<data-id="${favSerie.show.id}">`;
+    if (favSerie.show.image === null) {
+      htmlFav += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="favImage" />`;
     } else {
-      htmlFav += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}/>`;
+      htmlFav += `<img src="${favSerie.show.image.medium} class= "favImage" alt="Image ${favSerie.show.name}/>`;
     }
-    htmlFav += `<h3>${serie.show.name}</h3>`;
+    htmlFav += `<h3>${favSerie.show.name}</h3>`;
     htmlFav += `</li>`;
+    // lo pinto en el HTML
     listFav.innerHTML = htmlFav;
   }
-}*/
+  favHandler();
+};
+
+function favHandler(ev) {
+  addToFav(ev); //función para añadir favoritos al array
+  paintFav(ev); // función para pintar favoritos
+}
+
+// Función escuchadora, sobre la que hago click para agregar a favoritos
+function addListeners() {
+  let serieCards = document.querySelectorAll(".js-serieCard");
+  for (const serieCard of serieCards) {
+    serieCard.addEventListener("click", favHandler);
+  }
+}
+
+// 4. ALMACENAMIENTO LOCAL
+// Almacenar el listado de favoritas en el localStorage
+const keepInLocalStorage = () => {
+  localStorage.setItem("favorite", JSON.stringify(favorite));
+};
+
+// Recuperar la lista de favoritas del localStorage
+const getFromLocalStorage = () => {
+  favorite = JSON.parse(localStorage.getItem("favorite"));
+  paintFav();
+};
 
 // Funciones al ARRANCAR LA PÁGINA
 
