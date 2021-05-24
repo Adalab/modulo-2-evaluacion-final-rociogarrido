@@ -79,23 +79,21 @@ main {
   width: 70vw;
   padding: 10px;
   margin-top: 100px;
-  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: wrap;
 }
 
 h2 {
   text-align: center;
+  height: 60px;
 }
 
 /* Tarjetas de las series */
 .serieCard {
-  width: 180px;
-  height: 250px;
+  width: 200px;
+  height: 270px;
   margin: 1rem;
-  background-color: rgb(7, 141, 141);
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  display: inline-block;
+  flex-wrap: wrap;
+  cursor: pointer;
 }
 
 h3 {
@@ -103,5 +101,6 @@ h3 {
 }
 
 .serieImage {
-  width: 150px;
+  width: 100%;
+  border-radius: 20px;
 }
