@@ -70,11 +70,11 @@ function addListeners() {
 const addToFav = (ev) => {
   const clickedCard = ev.currentTarget.dataset; // Añado un currentTarget a la tarjeta
   const clickedCardId = parseInt(clickedCard.id); // Identifico el ID de la tarjeta clicada.
-  console.log(clickedCard);
+
   // Busco el elemento clicado por su ID. Si es el mismo, lo meto en la variable
   const foundSerie = series.find((serie) => serie.show.id === clickedCardId);
   // Busco si la serie clicada está en la lista de favoritas comparando ids
-  console.log(favorite.length);
+
   const isFav = favorite.find(
     (favoriteId) => favoriteId.show.id === clickedCardId
   );
@@ -97,6 +97,7 @@ const listFav = document.querySelector(".js-favorite");
 const paintFav = () => {
   // creo la variable vacía para pintar en el HTML
   let htmlFav = "";
+  htmlFav += `<h2>Favoritas</h2>`;
   // bucle para recorrer el array
   for (const favSerie of favorite) {
     htmlFav += `<li class="favCard">`;
@@ -112,12 +113,8 @@ const paintFav = () => {
     listFav.innerHTML = htmlFav;
   }
   addListeners();
+  keepInLocalStorage();
 };
-
-/*function paintFav() {
-  let htmlFav = getSerieHtmlCode(favorite, true);
-  listFav.innerHTML = htmlFav;
-}*/
 
 // 4. ALMACENAMIENTO LOCAL
 // Almacenar el listado de favoritas en el localStorage
@@ -125,7 +122,7 @@ const keepInLocalStorage = () => {
   localStorage.setItem("favorite", JSON.stringify(favorite));
 };
 
-// Recuperar la lista de favoritas del localStorage
+// Recuperar la lista de favoritas del localStorage, de forma que al recargar la página se sigan mostrando las favoritas.
 const getFromLocalStorage = () => {
   favorite = JSON.parse(localStorage.getItem("favorite"));
   paintFav();
@@ -133,5 +130,5 @@ const getFromLocalStorage = () => {
 
 // Funciones al ARRANCAR LA PÁGINA
 
-getFromApi();
 paintSeries();
+getFromLocalStorage();
