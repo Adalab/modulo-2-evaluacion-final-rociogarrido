@@ -69,9 +69,7 @@ main {
   width: 30vw;
   padding: 10px;
   margin-top: 100px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 .result__section {

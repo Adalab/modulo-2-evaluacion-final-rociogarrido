@@ -59,7 +59,6 @@ btnSearch.addEventListener("click", handleSearch);
 
 // Función escuchadora, sobre la que hago click para agregar a favoritos
 function addListeners() {
-  console.log("entre");
   let allSerieCards = document.querySelectorAll(".js-serieCard");
   for (const serieCard of allSerieCards) {
     serieCard.addEventListener("click", addToFav);
@@ -125,6 +124,21 @@ const keepInLocalStorage = () => {
 // Recuperar la lista de favoritas del localStorage, de forma que al recargar la página se sigan mostrando las favoritas.
 const getFromLocalStorage = () => {
   favorite = JSON.parse(localStorage.getItem("favorite"));
+  paintFav();
+};
+
+// 5. BONUS: Borrar favoritos
+
+const removeFav = (ev) => {
+  const clickedCardId = parseInt(ev.currentTarget.id);
+  const favSerieId = favorite.find(
+    (favorite) => favorite.show.id === clickedCardId
+  );
+  const favIndex = favorite.indexOf(favSerieId);
+  if (favIndex > -1) {
+    favorite.splice(favIndex, 1);
+  }
+  keepInLocalStorage();
   paintFav();
 };
 
