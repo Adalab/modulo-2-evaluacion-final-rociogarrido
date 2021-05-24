@@ -94,8 +94,8 @@ const paintFav = () => {
     }
     htmlFav += `<h3>${favSerie.show.name}</h3>`;
     htmlFav += `</li>`;
+    htmlFav += `<button class="js-removedCard">X</button>`;
   }
-  htmlFav += `<button class="js-removedCard"></button>`;
   listFav.innerHTML = htmlFav; // lo pinto en el HTML
   addListeners();
   keepInLocalStorage();

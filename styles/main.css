@@ -123,6 +123,7 @@ h3 {
   border: 2px solid rgb(7, 141, 141);
   border-radius: 50px;
   cursor: pointer;
-  width: 90px;
+  position: fixed;
+  width: 60px;
   height: 25px;
 }
