@@ -46,7 +46,7 @@ const paintSeries = () => {
   addListeners();
 };
 
-// Escuchar al evento click en botón de búsqueda
+// Escuchar al evento click en el botón "buscar"
 const btnSearch = document.querySelector(".js-button");
 
 function handleSearch() {
@@ -56,24 +56,35 @@ function handleSearch() {
 btnSearch.addEventListener("click", handleSearch);
 
 // 3. FAVORITOS. Una vez aparecen los resultados de la búsqueda, la usuaria puede indicar cuáles son sus series favoritas.
-// Función para añadir a favoritos
 
+// Función escuchadora, sobre la que hago click para agregar a favoritos
+function addListeners() {
+  console.log("entre");
+  let allSerieCards = document.querySelectorAll(".js-serieCard");
+  for (const serieCard of allSerieCards) {
+    serieCard.addEventListener("click", addToFav);
+  }
+}
+
+// Función para añadir la serie clicada al array "favorite"
 const addToFav = (ev) => {
-  ev.preventDefault();
-  // para reconocer el id de la tarjeta clicada.
-  const clickedCard = parseInt(ev.currentTarget.id);
-  // buscar el elemento clickado por su ID y si es el mismo lo mete en la variable
-  let foundSerie = series.find((serie) => serie.id === clickedCard);
-  // buscar si la serie clickada está en la lista de favoritos comparando ids
-  let isFav = favorite.find(
-    (favoriteId) => favoriteId.show.id === itemShowInfo.show.id
+  const clickedCard = ev.currentTarget.dataset; // Añado un currentTarget a la tarjeta
+  const clickedCardId = parseInt(clickedCard.id); // Identifico el ID de la tarjeta clicada.
+  console.log(clickedCard);
+  // Busco el elemento clicado por su ID. Si es el mismo, lo meto en la variable
+  const foundSerie = series.find((serie) => serie.show.id === clickedCardId);
+  // Busco si la serie clicada está en la lista de favoritas comparando ids
+  console.log(favorite.length);
+  const isFav = favorite.find(
+    (favoriteId) => favoriteId.show.id === clickedCardId
   );
-  // si la serie en la clicamos es undefined porque no está en el array de favoritas
+
+  // si la serie clicada no está en el array de favoritas
   if (isFav === undefined) {
     favorite.push(foundSerie); // la añadimos
   } else {
     favorite = favorite.filter(
-      (favoriteId) => favoriteId.show.id !== serie.show.id
+      (favoriteId) => favoriteId.show.id !== clickedCardId
     );
   }
   keepInLocalStorage();
@@ -93,28 +104,20 @@ const paintFav = () => {
     if (favSerie.show.image === null) {
       htmlFav += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="favImage" />`;
     } else {
-      htmlFav += `<img src="${favSerie.show.image.medium} class= "favImage" alt="Image ${favSerie.show.name}/>`;
+      htmlFav += `<img src="${favSerie.show.image.medium}" class= "favImage" alt="Image ${favSerie.show.name}"/>`;
     }
     htmlFav += `<h3>${favSerie.show.name}</h3>`;
     htmlFav += `</li>`;
     // lo pinto en el HTML
     listFav.innerHTML = htmlFav;
   }
-  favHandler();
+  addListeners();
 };
 
-function favHandler(ev) {
-  addToFav(ev); //función para añadir favoritos al array
-  paintFav(ev); // función para pintar favoritos
-}
-
-// Función escuchadora, sobre la que hago click para agregar a favoritos
-function addListeners() {
-  let serieCards = document.querySelectorAll(".js-serieCard");
-  for (const serieCard of serieCards) {
-    serieCard.addEventListener("click", favHandler);
-  }
-}
+/*function paintFav() {
+  let htmlFav = getSerieHtmlCode(favorite, true);
+  listFav.innerHTML = htmlFav;
+}*/
 
 // 4. ALMACENAMIENTO LOCAL
 // Almacenar el listado de favoritas en el localStorage
