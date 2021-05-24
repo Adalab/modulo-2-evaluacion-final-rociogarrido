@@ -6,10 +6,8 @@ let favorite = []; // array para almacenar las series favoritas de la usuaria
 
 // Call to API. Obtener los datos del API y guardarlos en JSON
 const search = document.querySelector(".js-search");
-
 const getFromApi = () => {
   const inputValue = search.value;
-
   fetch(`//api.tvmaze.com/search/shows?q=${inputValue}`) // para construir la URL de búsqueda hay que recoger el texto que ha introducido la usuaria en el campo de búsqueda
     .then((response) => response.json()) // Le pido en el primer then que devuelva la respuesta en json
     .then((data) => {
@@ -20,7 +18,6 @@ const getFromApi = () => {
 
 // Guardar los datos de la búsqueda en un array.
 const listSeries = document.querySelector(".js-result");
-
 const getSerieHtmlCode = (serie) => {
   let htmlCard = "";
   // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
@@ -46,18 +43,15 @@ const paintSeries = () => {
   addListeners();
 };
 
-// Escuchar al evento click en el botón "buscar"
+// Función ESCUCHADORA Del botón "buscar"
 const btnSearch = document.querySelector(".js-button");
-
-function handleSearch() {
+const handleSearch = () => {
   getFromApi();
-}
-
+};
 btnSearch.addEventListener("click", handleSearch);
 
 // 3. FAVORITOS. Una vez aparecen los resultados de la búsqueda, la usuaria puede indicar cuáles son sus series favoritas.
-
-// Función escuchadora, sobre la que hago click para agregar a favoritos
+// Función ESCUCHADORA, sobre la que hago click para agregar a favoritos
 function addListeners() {
   let allSerieCards = document.querySelectorAll(".js-serieCard");
   for (const serieCard of allSerieCards) {
@@ -69,15 +63,12 @@ function addListeners() {
 const addToFav = (ev) => {
   const clickedCard = ev.currentTarget.dataset; // Añado un currentTarget a la tarjeta
   const clickedCardId = parseInt(clickedCard.id); // Identifico el ID de la tarjeta clicada.
-
   // Busco el elemento clicado por su ID. Si es el mismo, lo meto en la variable
   const foundSerie = series.find((serie) => serie.show.id === clickedCardId);
   // Busco si la serie clicada está en la lista de favoritas comparando ids
-
   const isFav = favorite.find(
     (favoriteId) => favoriteId.show.id === clickedCardId
   );
-
   // si la serie clicada no está en el array de favoritas
   if (isFav === undefined) {
     favorite.push(foundSerie); // la añadimos
@@ -94,8 +85,7 @@ const addToFav = (ev) => {
 const listFav = document.querySelector(".js-favorite");
 
 const paintFav = () => {
-  // creo la variable vacía para pintar en el HTML
-  let htmlFav = "";
+  let htmlFav = ""; // creo la variable vacía para pintar en el HTML
   htmlFav += `<h2>Favoritas</h2>`;
   // bucle para recorrer el array
   for (const favSerie of favorite) {
@@ -128,21 +118,39 @@ const getFromLocalStorage = () => {
 };
 
 // 5. BONUS: Borrar favoritos
+// Función ESCUCHADORA, sobre la que hago click para eliminar de favoritas
+const removeListeners = () => {
+  let removedSeries = document.querySelectorAll(".js-removedCard");
+  for (const removedSerie of removedSeries) {
+    removedSerie.addEventListener("click", removeFav);
+  }
+};
 
-/*const removeFav = (ev) => {
-  const clickedCardId = parseInt(ev.currentTarget.id);
-  const favSerieId = favorite.find(
+// Función para eliminar una película de favoritas
+const removeFav = (ev) => {
+  const clickedCard = ev.currentTarget.dataset;
+  const clickedCardId = parseInt(clickedCard.id);
+  const favSerie = favorite.find(
     (favorite) => favorite.show.id === clickedCardId
   );
-  const favIndex = favorite.indexOf(favSerieId);
+  const favIndex = favorite.indexOf(favSerie);
   if (favIndex > -1) {
     favorite.splice(favIndex, 1);
   }
   keepInLocalStorage();
   paintFav();
-};*/
+};
+
+// Función RESET para borrar todos los favoritos a la vez
+const btnReset = document.querySelector(".js-reset");
+const resetAll = () => {
+  localStorage.removeItem("favorite");
+  favorite = [];
+  keepInLocalStorage();
+  paintFav();
+};
+btnReset.addEventListener("click", resetAll);
 
 // Funciones al ARRANCAR LA PÁGINA
-
 paintSeries();
 getFromLocalStorage();

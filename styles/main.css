@@ -115,3 +115,14 @@ h3 {
   width: 100%;
   border-radius: 20px;
 }
+
+.reset-btn {
+  cursor: pointer;
+  font-family: inherit;
+  background-color: rgb(7, 141, 141);
+  border: 2px solid rgb(7, 141, 141);
+  border-radius: 50px;
+  cursor: pointer;
+  width: 90px;
+  height: 25px;
+}
