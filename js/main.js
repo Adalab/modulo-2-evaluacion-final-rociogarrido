@@ -129,7 +129,7 @@ const getFromLocalStorage = () => {
 
 // 5. BONUS: Borrar favoritos
 
-const removeFav = (ev) => {
+/*const removeFav = (ev) => {
   const clickedCardId = parseInt(ev.currentTarget.id);
   const favSerieId = favorite.find(
     (favorite) => favorite.show.id === clickedCardId
@@ -140,7 +140,7 @@ const removeFav = (ev) => {
   }
   keepInLocalStorage();
   paintFav();
-};
+};*/
 
 // Funciones al ARRANCAR LA PÁGINA
 
