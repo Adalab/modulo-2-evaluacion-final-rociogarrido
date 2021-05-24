@@ -24,12 +24,12 @@ const listSeries = document.querySelector(".js-result");
 const getSerieHtmlCode = (serie) => {
   let htmlCard = "";
   // por cada show contenido en el resultado de la búsqueda hay que pintar una tarjeta donde mostramos:
-  htmlCard += `<li class="serieCard">`;
-  htmlCard += `<data-id="${serie.show.id}">`;
+  htmlCard += `<li class="serieCard" `;
+  htmlCard += `data-id="${serie.show.id}">`;
   if (serie.show.image === null) {
     htmlCard += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="serieImage" />`; // imagen por defecto para aquellas series que no tienen
   } else {
-    htmlCard += `<img src="${serie.show.image.medium} class= "serieImage" alt="Image ${serie.show.name}/>`; // muestra la imagen de la serie
+    htmlCard += `<img src="${serie.show.image.medium}" class= "serieImage" alt="Image ${serie.show.name}"/>`; // muestra la imagen de la serie
   }
   htmlCard += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
   htmlCard += `</li>`;
@@ -56,7 +56,7 @@ btnSearch.addEventListener("click", handleSearch);
 
 // 3. FAVORITOS. Una vez aparecen los resultados de la búsqueda, la usuaria puede indicar cuáles son sus series favoritas.
 // Función para añadir a favoritos
-const listFav = document.querySelector(".js-favorite");
+/*const listFav = document.querySelector(".js-favorite");
 
 const addToFav = (ev) => {
   ev.preventDefault();
@@ -85,7 +85,7 @@ function paintFav() {
     htmlFav += `</li>`;
     listFav.innerHTML = htmlFav;
   }
-}
+}*/
 
 // Funciones al ARRANCAR LA PÁGINA
 
