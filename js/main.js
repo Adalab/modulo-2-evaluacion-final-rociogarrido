@@ -86,18 +86,18 @@ const paintFav = () => {
   // bucle para recorrer el array
   for (const favSerie of favorite) {
     htmlFav += `<li class="favCard">`;
-    htmlFav += `<data-id="${favSerie.show.id}">`;
     if (favSerie.show.image === null) {
       htmlFav += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" alt="" class="favImage" />`;
     } else {
       htmlFav += `<img src="${favSerie.show.image.medium}" class= "favImage" alt="Image ${favSerie.show.name}"/>`;
     }
     htmlFav += `<h3>${favSerie.show.name}</h3>`;
+    htmlFav += `<button class="remove-btn js-removedCard" data-id="${favSerie.show.id}">X</button>`;
     htmlFav += `</li>`;
-    htmlFav += `<button class="js-removedCard">X</button>`;
   }
   listFav.innerHTML = htmlFav; // lo pinto en el HTML
   addListeners();
+  removeListeners();
   keepInLocalStorage();
 };
 
@@ -109,8 +109,11 @@ const keepInLocalStorage = () => {
 
 // Recuperar la lista de favoritas del localStorage, de forma que al recargar la página se sigan mostrando las favoritas.
 const getFromLocalStorage = () => {
-  favorite = JSON.parse(localStorage.getItem("favorite"));
-  paintFav();
+  const localStorageFavorite = localStorage.getItem("favorite");
+  if (localStorageFavorite !== null) {
+    favorite = JSON.parse(localStorageFavorite);
+    paintFav();
+  }
 };
 
 // 5. BONUS: Borrar favoritos
@@ -125,20 +128,20 @@ const removeListeners = () => {
 // Función para eliminar una película de favoritas. ¡REVISAR!
 const removeFav = (ev) => {
   const clickedCard = ev.currentTarget.dataset;
-  const clickedCardId = parseInt(clickedCard.id);
+  const clickedCardId = parseInt(clickedCard.id); // parséame el id de la tarjeta clicada.
   const favSerie = favorite.find(
     (favorite) => favorite.show.id === clickedCardId
-  );
-  const favIndex = favorite.indexOf(favSerie); // busco el elemento dentro de la lista de favoritos q
+  ); //
+  const favIndex = favorite.indexOf(favSerie); // busco el índice de la serie favorita
   if (favIndex > -1) {
     // si su índice es mayor que -1 (es decir, cualquier serie que esté en el array)
-    favorite.splice(favIndex, 1); // le quitas al array la serie
+    favorite.splice(favIndex, 1); // le quitas la serie al array "favorite"
   }
   keepInLocalStorage();
   paintFav();
 };
 
-// Función RESET para borrar todos los favoritos a la vez
+// Función RESET para borrar todas las favoritas a la vez
 const btnReset = document.querySelector(".js-reset");
 const resetAll = () => {
   localStorage.removeItem("favorite");
