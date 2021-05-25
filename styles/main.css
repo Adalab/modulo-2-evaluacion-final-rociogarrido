@@ -14,7 +14,7 @@ body {
 }
 
 .header {
-  min-width: 100%;
+  width: 100vw;
   height: 100px;
   border-radius: 20px;
   top: 0;
