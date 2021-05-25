@@ -17,17 +17,17 @@ Una vez aparecen los resultados de búsqueda, la usuaria puede indicar cuáles s
 
 ### Requisitos
 
-Tener instalado git.
+- Tener instalado git.
 
-Tener un editor de código.
+- Tener un editor de código.
 
 ### Iniciar el proyecto
 
 Para poder utilizar o colaborar en el proyecto:
 
-Descargar o clonar el repositorio con `git clone´
+- Descargar o clonar el repositorio con `git clone´.
 
-Para visualizar la página al momento necesitarás tener la extensión Go Live
+- Para visualizar la página al momento necesitarás tener la extensión Go Live.
 
 ### Enlace de la página: http://beta.adalab.es/modulo-2-evaluacion-final-rociogarrido/
 
