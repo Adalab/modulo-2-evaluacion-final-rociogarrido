@@ -59,23 +59,24 @@ function addListeners() {
 
 // Función para añadir la serie clicada al array "favorite"
 const addToFav = (ev) => {
-  const clickedCard = ev.currentTarget.dataset; // Añado un currentTarget a la tarjeta
-  const clickedCardId = parseInt(clickedCard.id); // Identifico el ID de la tarjeta clicada.
-  // Busco el elemento clicado por su ID. Si es el mismo, lo meto en la variable
+  const clickedCard = ev.currentTarget.dataset; // Identifico la serie clicada.
+  const clickedCardId = parseInt(clickedCard.id); // Obtengo el ID de la tarjeta clicada.
+  // Busco la serie clicada en el array de "series" por su ID. Si es el mismo, lo meto en la variable
   const foundSerie = series.find((serie) => serie.show.id === clickedCardId);
   // Busco si la serie clicada está en la lista de favoritas comparando ids
   const isFav = favorite.find(
     (favoriteId) => favoriteId.show.id === clickedCardId
   ); // si la serie clicada no está en el array de favoritas
   if (isFav === undefined) {
-    favorite.push(foundSerie); // la añadimos
+    favorite.push(foundSerie); // la añado
   } else {
+    // si está, filtro ¿? (esto no me queda muy claro)
     favorite = favorite.filter(
       (favoriteId) => favoriteId.show.id !== clickedCardId
     );
   }
-  keepInLocalStorage();
-  paintFav();
+  keepInLocalStorage(); // guardo favoritas en el localStorage
+  paintFav(); // pinto favoritas
 };
 
 // Función para pintar el listado de las series favoritas
@@ -145,7 +146,7 @@ const removeFav = (ev) => {
 const btnReset = document.querySelector(".js-reset");
 const resetAll = () => {
   localStorage.removeItem("favorite");
-  favorite = [];
+  favorite = []; // con esto vacío el array de favoritas
   keepInLocalStorage();
   paintFav();
 };
