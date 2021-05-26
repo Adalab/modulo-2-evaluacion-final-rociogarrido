@@ -157,12 +157,12 @@ btnReset.addEventListener("click", resetAll);
 paintSeries();
 getFromLocalStorage();
 
-// Pintar en consola listado de favoritas
+// ENTREVISTA CON MIGUEL. Crear un botón que, al clicar, muestre en consola el listado nombres de favoritas
 
 const btnLog = document.querySelector(".js-btnLog");
-console.log("Hola, mundo");
 
 const handleList = () => {
+  console.log("Hola, mundo");
   for (const nameFav of favorite) {
     console.log(nameFav.show.name);
   }
