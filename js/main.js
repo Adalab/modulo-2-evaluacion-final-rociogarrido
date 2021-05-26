@@ -33,6 +33,7 @@ const getSerieHtmlCode = (serie) => {
   } else {
     htmlCard += `<img src="${serie.show.image.medium}" class="serieImage" alt="Image ${serie.show.name}"/>`; // muestra la imagen de la serie
   }
+  htmlCard += `<p>${serie.show.status}</p>`;
   htmlCard += `<h3>${serie.show.name}</h3>`; // muestra el nombre de la serie
   htmlCard += `</li>`;
   return htmlCard;
@@ -155,3 +156,15 @@ btnReset.addEventListener("click", resetAll);
 // Funciones al ARRANCAR LA PÁGINA
 paintSeries();
 getFromLocalStorage();
+
+// Pintar en consola listado de favoritas
+
+const btnLog = document.querySelector(".js-btnLog");
+console.log("Hola, mundo");
+
+const handleList = () => {
+  for (const nameFav of favorite) {
+    console.log(nameFav.show.name);
+  }
+};
+btnLog.addEventListener("click", handleList);
