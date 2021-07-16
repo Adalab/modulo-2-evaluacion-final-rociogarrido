@@ -1,7 +1,9 @@
+
 # Buscador de series
 
 Esta aplicación web de búsqueda de series nos permite crear un listado de series favoritas y gestionarlas de manera intuitiva. 
 
+![Captura de pantalla 2021-07-16 a las 11 20 15](https://user-images.githubusercontent.com/77678575/125924868-a9983fec-7e97-4e15-8a5e-954555035d9b.png)
 
 ### Requisitos
 
