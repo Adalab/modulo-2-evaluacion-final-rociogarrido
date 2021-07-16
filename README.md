@@ -15,9 +15,9 @@ Esta aplicación web de búsqueda de series nos permite crear un listado de seri
 
 Para poder utilizar el proyecto:
 
-1. Descarga o clona el repositorio con `git clone´.
-2. Instala las dependencias con `npm install´.
-3. Arranca el proyecto con `npm start´.
+1. Descarga o clona el repositorio con ```git clone```.
+2. Instala las dependencias con ```npm install```.
+3. Arranca el proyecto con ```npm start```.
 
 ## Características
 
